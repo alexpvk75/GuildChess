@@ -1,0 +1,36 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# Gradle
+.gradle/
+build/
+
+# Maven
+target/
+
+# Compiled class files
+*.class
+
+# Logs
+*.log
+
+# Java archives (generated builds)
+*.jar
+*.war
+*.nar
+*.ear
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
+# JVM crash logs
+hs_err_pid*
+replay_pid*
+
+# OS files
+.DS_Store
+Thumbs.db
