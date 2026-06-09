@@ -29,6 +29,12 @@ public class Main {
         JLabel logobanner = new JLabel(new ImageIcon(banner));
         latterale.add(logobanner);
 
+        latterale.add(Box.createVerticalStrut(90)); //spazio
+        JLabel testoRender = new JLabel("GUILD   HESS");
+        testoRender.setFont(new Font("Montserrat Bold", Font.ITALIC, 36));
+        testoRender.setForeground(Color.WHITE);
+        latterale.add(testoRender);
+
         JPanel campo = new JPanel();
         campo.setPreferredSize(new Dimension(1300, 900));
         campo.setBackground(ripempitivoColore);
