@@ -9,21 +9,30 @@ public class Main {
         finestra.setLocationRelativeTo(null);
         finestra.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         finestra.setResizable(false);
-        Color DaOne = new Color(37, 36, 60);
+        Color ripempitivoColore = new Color(28, 31, 57);
+        Color cerchiativoColore = new Color(68, 85, 255);
         finestra.setIconImage((new ImageIcon(
             Main.class.getResource("/assets/images/icons/logo.png")).getImage()));
-        finestra.getContentPane().setBackground(DaOne);
+        finestra.getContentPane().setBackground(ripempitivoColore);
         finestra.setLayout(new BorderLayout());
 
         JPanel latterale = new JPanel();
         latterale.setPreferredSize(new Dimension(300, 900));
-        latterale.setBackground(DaOne);
-        latterale.setBorder(BorderFactory.createLineBorder(new Color(100, 100, 100), 1));
+        latterale.setBackground(ripempitivoColore);
+        latterale.setBorder(BorderFactory.createLineBorder(cerchiativoColore, 1));
+
+        latterale.add(Box.createVerticalStrut(45)); //spazio
+        ImageIcon bannerORG = new ImageIcon(Main.class.getResource("/assets/images/icons/banner.png"));
+        Image banner = bannerORG.getImage().getScaledInstance(248, 27, Image.SCALE_SMOOTH);
+        JLabel logobanner = new JLabel(new ImageIcon(banner));
+        latterale.add(logobanner);
+
         JPanel campo = new JPanel();
         campo.setPreferredSize(new Dimension(1300, 900));
-        campo.setBackground(DaOne);
-        campo.setBorder(BorderFactory.createLineBorder(new Color(166, 166, 166), 1));
+        campo.setBackground(ripempitivoColore);
+        campo.setBorder(BorderFactory.createLineBorder(cerchiativoColore, 1));
         campo.setLayout(new CardLayout());
+
         finestra.add(latterale, BorderLayout.WEST);
         finestra.add(campo, BorderLayout.CENTER);
 
