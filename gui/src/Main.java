@@ -10,7 +10,7 @@ public class Main {
         finestra.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         finestra.setResizable(false);
         finestra.setIconImage((new ImageIcon(
-            Main.class.getResource("/logo.png")).getImage()));
+            Main.class.getResource("/assets/images/icons/logo.png")).getImage()));
         finestra.getContentPane().setBackground(new Color(39, 35, 49));
         finestra.setVisible(true);
     }
