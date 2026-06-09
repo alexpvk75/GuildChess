@@ -1,4 +1,4 @@
-package guildchess;
+package gui.guildchess;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,14 +7,14 @@ public class Main {
     public static void main(String[] args) {
         JFrame finestra = new JFrame();
         finestra.setTitle("GuildChess");
-        finestra.setSize(1600, 900);
+        finestra.setSize(1280, 720);
         finestra.setLocationRelativeTo(null);
         finestra.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         finestra.setResizable(false);
         Color ripempitivoColore = new Color(28, 31, 57);
         Color cerchiativoColore = new Color(68, 85, 255);
         finestra.setIconImage((new ImageIcon(
-            Main.class.getResource("/resources/icons/logo.png")).getImage()));
+            Main.class.getResource("resources/icons/logo.png")).getImage()));
         finestra.getContentPane().setBackground(ripempitivoColore);
         finestra.setLayout(new BorderLayout());
 
@@ -24,7 +24,7 @@ public class Main {
         latterale.setBorder(BorderFactory.createLineBorder(cerchiativoColore, 1));
 
         latterale.add(Box.createVerticalStrut(45)); //spazio
-        ImageIcon bannerORG = new ImageIcon(Main.class.getResource("/resources/icons/banner.png"));
+        ImageIcon bannerORG = new ImageIcon(Main.class.getResource("resources/icons/banner.png"));
         Image banner = bannerORG.getImage().getScaledInstance(248, 27, Image.SCALE_SMOOTH);
         JLabel logobanner = new JLabel(new ImageIcon(banner));
         latterale.add(logobanner);
