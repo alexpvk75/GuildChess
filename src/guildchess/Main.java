@@ -1,4 +1,4 @@
-package guilchess;
+package guildchess;
 
 import javax.swing.*;
 import java.awt.*;
