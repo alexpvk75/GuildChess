@@ -1,10 +1,16 @@
 package com.pavlyk.guildchess;
 
+import java.lang.*;
+import java.util.*;
 import javax.swing.*;
 import java.awt.*;
+import java.sql.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
+        Connection conn = DriverManager.getConnection("jdbc:sqlite:test.db");
+        System.out.println("Connected successfully!");
+        conn.close();
         JFrame finestra = new JFrame();
         finestra.setTitle("GuildChess");
         finestra.setSize(1280, 720);
@@ -39,5 +45,6 @@ public class Main {
         finestra.add(campo, BorderLayout.CENTER);
 
         finestra.setVisible(true);
+        
     }
 }
