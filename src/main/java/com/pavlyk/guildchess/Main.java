@@ -1,7 +1,5 @@
 package com.pavlyk.guildchess;
 
-import java.lang.*;
-import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.sql.*;
