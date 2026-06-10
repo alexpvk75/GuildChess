@@ -1,4 +1,4 @@
-package gui.guildchess;
+package com.pavlyk.guildchess;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +14,7 @@ public class Main {
         Color ripempitivoColore = new Color(28, 31, 57);
         Color cerchiativoColore = new Color(68, 85, 255);
         finestra.setIconImage((new ImageIcon(
-            Main.class.getResource("resources/icons/logo.png")).getImage()));
+            Main.class.getResource("/icons/logo.png")).getImage()));
         finestra.getContentPane().setBackground(ripempitivoColore);
         finestra.setLayout(new BorderLayout());
 
@@ -24,7 +24,7 @@ public class Main {
         latterale.setBorder(BorderFactory.createLineBorder(cerchiativoColore, 1));
 
         latterale.add(Box.createVerticalStrut(45)); //spazio
-        ImageIcon bannerORG = new ImageIcon(Main.class.getResource("resources/icons/banner.png"));
+        ImageIcon bannerORG = new ImageIcon(Main.class.getResource("/icons/banner.png"));
         Image banner = bannerORG.getImage().getScaledInstance(248, 27, Image.SCALE_SMOOTH);
         JLabel logobanner = new JLabel(new ImageIcon(banner));
         latterale.add(logobanner);
