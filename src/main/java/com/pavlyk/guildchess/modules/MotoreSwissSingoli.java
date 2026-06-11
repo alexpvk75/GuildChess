@@ -1,4 +1,4 @@
-package modules.abbinamenti.SwissSingoli;
+package com.pavlyk.guildchess.modules;
 
 public class MotoreSwissSingoli {
     
