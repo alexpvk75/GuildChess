@@ -3,12 +3,12 @@ package com.pavlyk.guildchess;
 import javax.swing.*;
 import java.awt.*;
 import java.sql.*;
+import com.formdev.flatlaf.*;
+import com.pavlyk.guildchess.modules.*;
 
 public class Main {
     public static void main(String[] args) throws Exception{
-        Connection conn = DriverManager.getConnection("jdbc:sqlite:test.db");
-        System.out.println("Connected successfully!");
-        conn.close();
+        FlatDarkLaf.setup();
         JFrame finestra = new JFrame();
         finestra.setTitle("GuildChess");
         finestra.setSize(1280, 720);
@@ -41,7 +41,7 @@ public class Main {
 
         finestra.add(latterale, BorderLayout.WEST);
         finestra.add(campo, BorderLayout.CENTER);
-
+        
         finestra.setVisible(true);
         
     }
