@@ -5,7 +5,6 @@ out/
 
 #VS Code
 .vscode/
-!.vscode/launch.json
 
 # Gradle
 .gradle/
