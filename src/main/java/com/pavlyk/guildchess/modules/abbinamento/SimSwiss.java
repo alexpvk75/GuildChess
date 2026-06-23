@@ -4,7 +4,7 @@ import java.util.*;
 
 public class SimSwiss {
     public static void main(String[] args) {
-        int N_giocatori = 64;
+        int N_giocatori = 20;
         TorneoSwiss torneo1 = new TorneoSwiss(N_giocatori);
         for (int g = 0; g < N_giocatori; g++) {
             torneo1.getGiocatori().add(new GiocatoreSwiss("Giocatore " + (g+1), new Random().nextInt(1000, 1751)));
@@ -14,7 +14,7 @@ public class SimSwiss {
 
         for (int r = 0; r < torneo1.getRoundsTot(); r++){
             if(r==0){
-                torneo1.ordinare(false);
+                torneo1.spareggiare(false);
             } else {
                 torneo1.aggiornare(false);
                 torneo1.stampareClassifica();

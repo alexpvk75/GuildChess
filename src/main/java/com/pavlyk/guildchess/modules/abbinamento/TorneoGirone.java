@@ -10,7 +10,7 @@ public class TorneoGirone {
     private int minElo;
 
     public TorneoGirone(int N_giocatori){
-        this.roundsTot = (int)(2*(N_giocatori-1));
+        this.roundsTot = (int)(2*(N_giocatori-(1-N_giocatori%2)));
     }
 
     public void inizializzare() {
@@ -55,6 +55,7 @@ public class TorneoGirone {
             int c = Integer.compare(b.getNumeroAbbinamento(), a.getNumeroAbbinamento());
             return c;
         });
+        if (daAbbinare.size() % 2 != 0) daAbbinare.add(null);
         RoundGirone taleRound = new RoundGirone();
         ArrayList<GiocatoreGirone> gruppoA = new ArrayList<>();
         ArrayList<GiocatoreGirone> gruppoB = new ArrayList<>();
@@ -65,9 +66,6 @@ public class TorneoGirone {
                 gruppoB.add(daAbbinare.get(i));
             }
         }
-        if (gruppoA.size() > gruppoB.size()) {
-            gruppoB.add(null);
-        }
         int roundsFinora = this.getRounds().size();
         //uso Berger tables
         for(int shift = 0; shift < roundsFinora; shift++){
@@ -76,23 +74,19 @@ public class TorneoGirone {
             GiocatoreGirone temp = gruppoB.get(gruppoB.size()-1);
             gruppoB.set(gruppoB.size()-1, gruppoA.get(0));
             gruppoA.set(0, temp);
-            if (gruppoA.size() > 1) {
-                Collections.swap(gruppoA, 0, 1);
-            }
+            Collections.swap(gruppoA, 0, 1);
         }
         boolean decisioneColore = (roundsFinora%2==0);
         int coppie = daAbbinare.size()/2;
         for(int p = 0; p < coppie; p++){
             GiocatoreGirone A = gruppoA.get(p);
             GiocatoreGirone B = gruppoB.get(p);
+            if(A == null || B == null) continue;
             PartitaGirone coppia = decisioneColore ? new PartitaGirone(A, B) : new PartitaGirone(B, A);
-            if(A!= null && B!=null){
-                taleRound.getPartite().add(coppia);
-            }
+            taleRound.getPartite().add(coppia);
         }
         this.getRounds().add(taleRound);
     }
-
     public void aggiornare(boolean finito){
         for (GiocatoreGirone g : giocatori){
             g.setVittorie(0);
@@ -126,26 +120,13 @@ public class TorneoGirone {
                 g.setTPR((g.getTPR() + D_TPR)>=this.getMinElo()?(g.getTPR() + D_TPR):this.getMinElo());
             }
         }
-        this.ordinare(finito);
+        this.spareggiare(finito);
     }
 
-    public void ordinare(boolean finito) {
+    public void spareggiare(boolean finito) {
         giocatori.sort((a, b) -> {
             //punteggi
             int c = Double.compare(b.getPunteggio(), a.getPunteggio());
-            if (c != 0) return c;
-            // head-to-head diretto
-            c = 0;
-            for(PartitaGirone p : a.getPartite()){
-                if (a.equals(p.getBianco()) && b.equals(p.getNero())){
-                    c = Double.compare(p.getRisultato(), 0.5);
-                    break;
-                }
-                if (b.equals(p.getBianco()) && a.equals(p.getNero())){
-                    c = Double.compare(0.5, p.getRisultato());
-                    break;
-                }
-            }
             if (c != 0) return c;
             //vittorie
             c = Integer.compare(b.getVittorie(), a.getVittorie());

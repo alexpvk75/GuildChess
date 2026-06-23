@@ -136,10 +136,10 @@ public class TorneoSwiss {
                 g.setTPR((g.getTPR() + D_TPR)>=this.getMinElo()?(g.getTPR() + D_TPR):this.getMinElo());
             }
         }
-        this.ordinare(finito);
+        this.spareggiare(finito);
     }
 
-    public void ordinare(boolean finito) {
+    public void spareggiare(boolean finito) {
         giocatori.sort((a, b) -> {
             //punteggi
             int c = Double.compare(b.getPunteggio(), a.getPunteggio());
@@ -152,19 +152,6 @@ public class TorneoSwiss {
             if (c != 0) return c;
             //Sonneborn-Berger - somma pesata dei punteggi dei opponenti in base a risultati head-to-head
             c = Double.compare(b.getBerger(), a.getBerger());
-            if (c != 0) return c;
-            // head-to-head diretto
-            c = 0;
-            for(PartitaSwiss p : a.getPartite()){
-                if (a.equals(p.getBianco()) && b.equals(p.getNero())){
-                    c = Double.compare(p.getRisultato(), 0.5);
-                    break;
-                }
-                if (b.equals(p.getBianco()) && a.equals(p.getNero())){
-                    c = Double.compare(0.5, p.getRisultato());
-                    break;
-                }
-            }
             if (c != 0) return c;
             // tournament performance rating
             if(finito){
