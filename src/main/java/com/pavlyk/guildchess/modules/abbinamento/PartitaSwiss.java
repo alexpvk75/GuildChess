@@ -1,4 +1,4 @@
-package com.pavlyk.guildchess.modules;
+package com.pavlyk.guildchess.modules.abbinamento;
 
 public class PartitaSwiss {
     private GiocatoreSwiss bianco;

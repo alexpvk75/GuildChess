@@ -1,21 +1,25 @@
-package com.pavlyk.guildchess.modules;
+package com.pavlyk.guildchess.modules.abbinamento;
 
 import java.util.ArrayList;
 
-public class GiocatoreGirone {
+public class GiocatoreSwiss {
     private String nome;
     private int Elo;
     private int numeroAbbinamento;
 
-    private ArrayList<PartitaGirone> partite = new ArrayList<>();
+    private ArrayList<PartitaSwiss> partite = new ArrayList<>();
+    private int bilancioColori = 0;
+    private int serieColori;
+    private int lastColore;
+    private boolean Bye = false;
 
     private double punteggio = 0;
     private int vittorie= 0;
+    private double Buchholz = 0;
     private double Berger = 0; //Sonneborn-Berger
-    private double Koya = 0; //Koya System
     private double TPR = 0; //Tournament Performance Rating
 
-    public GiocatoreGirone(String nome, int Elo){
+    public GiocatoreSwiss(String nome, int Elo){
         this.nome = nome;
         this.Elo = Elo;
     }
@@ -37,7 +41,7 @@ public class GiocatoreGirone {
     public void setNumeroAbbinamento(int numeroAbbinamento) {
         this.numeroAbbinamento = numeroAbbinamento;
     }
-    public int aggiornareElo(GiocatoreGirone Opp, double puntoMio){
+    public int aggiornareElo(GiocatoreSwiss Opp, double puntoMio){
         int R_A = this.Elo;
         int R_B = Opp.getElo();
         double E_A = 1/(1+Math.pow(10, (R_B - R_A)/400));
@@ -51,6 +55,13 @@ public class GiocatoreGirone {
         int R_nuovo = (int)Math.round(R_A+K*(puntoMio - E_A));
         return (R_nuovo>=100)?R_nuovo:100;
     }
+    public boolean getBye(){
+        return Bye;
+    }
+    public void dareBye(){
+        this.Bye = true;
+        this.punteggio+=1;
+    }
     public double getPunteggio() {
         return punteggio;
     }
@@ -63,11 +74,17 @@ public class GiocatoreGirone {
     public void setVittorie(int vittorie) {
         this.vittorie = vittorie;
     }
-    public double getKoya(){
-        return Koya;
+    public int getBilancioColori() {
+        return bilancioColori;
     }
-    public void setKoya(double koya){
-        this.Koya = koya;
+    public void setBilancioColori(int bilancioColori) {
+        this.bilancioColori = bilancioColori;
+    }
+    public double getBuchholz() {
+        return Buchholz;
+    }
+    public void setBuchholz(double buchholz) {
+        this.Buchholz = buchholz;
     }
     public double getBerger() {
         return Berger;
@@ -75,9 +92,9 @@ public class GiocatoreGirone {
     public void setBerger(double berger) {
         this.Berger = berger;
     }
-    public ArrayList<GiocatoreGirone> getOpponenti() {
-        ArrayList<GiocatoreGirone> opponenti = new ArrayList<>();
-        for(PartitaGirone p : partite){
+    public ArrayList<GiocatoreSwiss> getOpponenti() {
+        ArrayList<GiocatoreSwiss> opponenti = new ArrayList<>();
+        for(PartitaSwiss p : partite){
             if(p.getBianco().equals(this)){
                 opponenti.add(p.getNero());
             } else if (p.getNero().equals(this)){
@@ -86,13 +103,20 @@ public class GiocatoreGirone {
         }
         return opponenti;
     }
-    public ArrayList<PartitaGirone> getPartite(){
+    public ArrayList<PartitaSwiss> getPartite(){
         return partite;
     }
-    public void aggiungiPartita(PartitaGirone partita){
+    public void aggiungiPartita(PartitaSwiss partita){
         boolean sonoBianco = this.equals(partita.getBianco());
         int colore = (sonoBianco)?0:1;
-        GiocatoreGirone opponente = (sonoBianco)?partita.getNero():partita.getBianco();
+        this.bilancioColori += (sonoBianco)?1:-1;
+        if (partite.isEmpty() || lastColore != colore) {
+            serieColori = 1;
+        } else {
+            serieColori++;
+        }
+        lastColore = colore;
+        GiocatoreSwiss opponente = (sonoBianco)?partita.getNero():partita.getBianco();
         double mioRisultato = Math.abs(colore - partita.getRisultato());
         this.punteggio += mioRisultato;
         this.aggiornareElo(opponente, mioRisultato);
@@ -103,5 +127,21 @@ public class GiocatoreGirone {
     }
     public void setTPR(double TPR) {
         this.TPR = TPR;
+    }
+
+    public int getSerieColori() {
+        return serieColori;
+    }
+
+    public void setSerieColori(int serieColori) {
+        this.serieColori = serieColori;
+    }
+
+    public int getLastColore() {
+        return lastColore;
+    }
+
+    public void setLastColore(int lastColore) {
+        this.lastColore = lastColore;
     }
 }

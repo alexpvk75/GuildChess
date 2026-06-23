@@ -1,4 +1,4 @@
-package com.pavlyk.guildchess.modules;
+package com.pavlyk.guildchess.modules.abbinamento;
 
 import java.util.*;
 import java.lang.Math;
