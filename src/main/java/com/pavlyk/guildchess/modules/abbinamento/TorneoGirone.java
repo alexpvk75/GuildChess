@@ -14,23 +14,23 @@ public class TorneoGirone {
     }
 
     public void inizializzare() {
-        giocatori.sort((a, b) -> {
+        this.giocatori.sort((a, b) -> {
             int c = Integer.compare(b.getElo(), a.getElo());
             if (c != 0) return c;
             return a.getNome().compareTo(b.getNome());
         });
-        for (int i = 0; i < giocatori.size(); i++) {
+        for (int i = 0; i < this.giocatori.size(); i++) {
             giocatori.get(i).setNumeroAbbinamento(i + 1);
         }
         this.setMinElo(giocatori.get(0).getElo());
-        for (GiocatoreGirone g : giocatori){
+        for (GiocatoreGirone g : this.giocatori){
             if(g.getElo() < this.getMinElo()) this.setMinElo(g.getElo());
-            for(GiocatoreGirone o : giocatori){
+            for(GiocatoreGirone o : this.giocatori){
                 if(!o.equals(g)){
                     g.setTPR(g.getTPR()+o.getElo());
                 }
             }
-            g.setTPR(g.getTPR()/(giocatori.size()-1));
+            g.setTPR(g.getTPR()/(this.giocatori.size()-1));
         }
     }
     public int getRoundsTot(){
