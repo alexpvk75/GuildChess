@@ -14,7 +14,8 @@ public class GiocatoreSwiss {
     private boolean Bye = false;
 
     private double punteggio = 0;
-    private int vittorie= 0;
+    private int vittorie = 0;
+    private int pareggi = 0;
     private double Buchholz = 0;
     private double Berger = 0; //Sonneborn-Berger
     private double TPR = 0; //Tournament Performance Rating
@@ -73,6 +74,12 @@ public class GiocatoreSwiss {
     }
     public void setVittorie(int vittorie) {
         this.vittorie = vittorie;
+    }
+    public int getPareggi() {
+        return pareggi;
+    }
+    public void setPareggi(int pareggi) {
+        this.pareggi = pareggi;
     }
     public int getBilancioColori() {
         return bilancioColori;

@@ -90,6 +90,7 @@ public class TorneoGirone {
     public void aggiornare(boolean finito){
         for (GiocatoreGirone g : giocatori){
             g.setVittorie(0);
+            g.setPareggi(0);
             g.setKoya(0);
             g.setBerger(0);
             for (GiocatoreGirone o : giocatori){
@@ -103,6 +104,7 @@ public class TorneoGirone {
                                     g.setKoya(g.getKoya() + (Math.abs(colore-p.getRisultato())));
                                 }
                                 g.setVittorie(g.getVittorie() + (int)((p.getRisultato()!=0.5)?Math.abs(colore-p.getRisultato()):0));
+                                g.setPareggi(g.getPareggi() + (int)((p.getRisultato()==0.5)?1:0));
                             }
                         }
                     }
@@ -120,10 +122,10 @@ public class TorneoGirone {
                 g.setTPR((g.getTPR() + D_TPR)>=this.getMinElo()?(g.getTPR() + D_TPR):this.getMinElo());
             }
         }
-        this.spareggiare(finito);
+        this.spareggiare();
     }
 
-    public void spareggiare(boolean finito) {
+    public void spareggiare() {
         giocatori.sort((a, b) -> {
             //punteggi
             int c = Double.compare(b.getPunteggio(), a.getPunteggio());
@@ -131,40 +133,35 @@ public class TorneoGirone {
             //vittorie
             c = Integer.compare(b.getVittorie(), a.getVittorie());
             if (c != 0) return c;
+            //pareggi
+            c = Integer.compare(b.getPareggi(), a.getPareggi());
+            if (c != 0) return c;
             //Sonneborn-Berger - somma pesata dei punteggi degli opponenti in base a risultati head-to-head
             c = Double.compare(b.getBerger(), a.getBerger());
             if (c != 0) return c;
             //Koya - somme dei punti ottenuti contro gli opponenti che hanno winto piu di 50% delle proprie partite
             c = Double.compare(b.getKoya(), a.getKoya());
             if (c != 0) return c;
-            // tournament performance rating
-            if(finito){
-                c = Double.compare(b.getTPR(), a.getTPR());
-                if (c != 0) return c;
-            }
-            // Elo
-            c = Integer.compare(b.getElo(), a.getElo());
-            if (c != 0) return c;
             // numero di abbinamento (ranking iniziale per Elo)
             c = Integer.compare(a.getNumeroAbbinamento(), b.getNumeroAbbinamento());
-            return c;
+            return c; //fallback definitivo
         });
     }
 
     public void stampareClassifica(){
         int gx = 1;
         if(this.getRounds().size() == this.getRoundsTot()){
-            System.out.println("\n# | Nome | PTS | W | TB1 | TB2 | TPR");
+            System.out.println("\nPOS | Nome(#) | PTS | W | D | TB1 | TB2 | TPR ");
         } else {
-            System.out.println("\n# | Nome | PTS | W | TB1 | TB2");
+            System.out.println("\nPOS | Nome(#) | PTS | W | D | TB1 | TB2");
         }
         for (GiocatoreGirone g : giocatori){
             if(this.getRounds().size() == this.getRoundsTot()){
-                System.out.println(gx + " | " + g.getNome() + " | " + g.getPunteggio() + " | " + g.getVittorie() 
-                + " | " + g.getBerger() + " | " + g.getKoya() + " | " + (int)g.getTPR());
+                System.out.println(gx + " | " + g.getNome() + " (" + g.getNumeroAbbinamento() + ") | " + g.getPunteggio() + " | " + g.getVittorie() 
+                + " | " + g.getPareggi() + " | " + g.getBerger() + " | " + g.getKoya() + " | " + (int)g.getTPR());
             } else {
-                System.out.println(gx + " | " + g.getNome() + " | " + g.getPunteggio() + " | " + g.getVittorie() 
-                + " | " + g.getBerger() + " | " + g.getKoya());
+                System.out.println(gx + " | " + g.getNome() + " (" + g.getNumeroAbbinamento() + ") | " + g.getPunteggio() + " | " + g.getVittorie() 
+                + " | " + g.getPareggi() + " | " + g.getBerger() + " | " + g.getKoya());
             }
             gx++;
         }

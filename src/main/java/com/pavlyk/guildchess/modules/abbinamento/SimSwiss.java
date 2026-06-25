@@ -14,7 +14,7 @@ public class SimSwiss {
 
         for (int r = 0; r < torneo1.getRoundsTot(); r++){
             if(r==0){
-                torneo1.spareggiare(false);
+                torneo1.spareggiare();
             } else {
                 torneo1.aggiornare(false);
                 torneo1.stampareClassifica();

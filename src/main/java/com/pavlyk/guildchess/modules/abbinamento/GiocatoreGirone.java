@@ -11,6 +11,7 @@ public class GiocatoreGirone {
 
     private double punteggio = 0;
     private int vittorie= 0;
+    private int pareggi = 0;
     private double Berger = 0; //Sonneborn-Berger
     private double Koya = 0; //Koya System
     private double TPR = 0; //Tournament Performance Rating
@@ -63,17 +64,23 @@ public class GiocatoreGirone {
     public void setVittorie(int vittorie) {
         this.vittorie = vittorie;
     }
-    public double getKoya(){
-        return Koya;
+    public int getPareggi() {
+        return pareggi;
     }
-    public void setKoya(double koya){
-        this.Koya = koya;
+    public void setPareggi(int pareggi) {
+        this.pareggi = pareggi;
     }
     public double getBerger() {
         return Berger;
     }
     public void setBerger(double berger) {
         this.Berger = berger;
+    }
+    public double getKoya(){
+        return Koya;
+    }
+    public void setKoya(double koya){
+        this.Koya = koya;
     }
     public ArrayList<GiocatoreGirone> getOpponenti() {
         ArrayList<GiocatoreGirone> opponenti = new ArrayList<>();

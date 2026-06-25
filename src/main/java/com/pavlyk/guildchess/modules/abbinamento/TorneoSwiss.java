@@ -108,6 +108,7 @@ public class TorneoSwiss {
     public void aggiornare(boolean finito){
         for (GiocatoreSwiss g : giocatori){
             g.setVittorie(0);
+            g.setPareggi(0);
             g.setBuchholz(0);
             g.setBerger(0);
             for (GiocatoreSwiss o : giocatori){
@@ -119,6 +120,7 @@ public class TorneoSwiss {
                                 int colore = (g.equals(p.getBianco())) ? 0 : 1;
                                 g.setBerger(g.getBerger() + (Math.abs(colore-p.getRisultato()) * o.getPunteggio()));
                                 g.setVittorie(g.getVittorie() + (int)((p.getRisultato()!=0.5)?Math.abs(colore-p.getRisultato()):0));
+                                g.setPareggi(g.getPareggi() + (int)((p.getRisultato()==0.5)?1:0));
                             }
                         }
                     }
@@ -136,10 +138,10 @@ public class TorneoSwiss {
                 g.setTPR((g.getTPR() + D_TPR)>=this.getMinElo()?(g.getTPR() + D_TPR):this.getMinElo());
             }
         }
-        this.spareggiare(finito);
+        this.spareggiare();
     }
 
-    public void spareggiare(boolean finito) {
+    public void spareggiare() {
         giocatori.sort((a, b) -> {
             //punteggi
             int c = Double.compare(b.getPunteggio(), a.getPunteggio());
@@ -147,19 +149,14 @@ public class TorneoSwiss {
             //vittorie
             c = Integer.compare(b.getVittorie(), a.getVittorie());
             if (c != 0) return c;
+            //pareggi
+            c = Integer.compare(b.getPareggi(), a.getPareggi());
+            if (c != 0) return c;
             //Buchholz - somma dei punteggi dei opponenti
             c = Double.compare(b.getBuchholz(), a.getBuchholz());
             if (c != 0) return c;
             //Sonneborn-Berger - somma pesata dei punteggi dei opponenti in base a risultati head-to-head
             c = Double.compare(b.getBerger(), a.getBerger());
-            if (c != 0) return c;
-            // tournament performance rating
-            if(finito){
-                c = Double.compare(b.getTPR(), a.getTPR());
-                if (c != 0) return c;
-            }
-            // Elo
-            c = Integer.compare(b.getElo(), a.getElo());
             if (c != 0) return c;
             // numero di abbinamento (ranking iniziale per Elo)
             c = Integer.compare(a.getNumeroAbbinamento(), b.getNumeroAbbinamento());
@@ -206,17 +203,17 @@ public class TorneoSwiss {
     public void stampareClassifica(){
         int gx = 1;
         if(this.getRounds().size() == this.getRoundsTot()){
-            System.out.println("\n# | Nome | PTS | W | TB1 | TB2 | TPR | Bye");
+            System.out.println("\nPOS | Nome(#) | PTS | W | D | TB1 | TB2 | TPR | Bye");
         } else {
-            System.out.println("\n# | Nome | PTS | W | TB1 | TB2 | Bye");
+            System.out.println("\nPOS | Nome(#) | PTS | W | D | TB1 | TB2 | Bye");
         }
         for (GiocatoreSwiss g : giocatori){
             if(this.getRounds().size() == this.getRoundsTot()){
-                System.out.println(gx + " | " + g.getNome() + " | " + g.getPunteggio() + " | " + g.getVittorie() 
-                + " | " + g.getBuchholz() + " | " + g.getBerger() + " | " + (int)g.getTPR() + " | " + ((g.getBye())?1:0));
+                System.out.println(gx + " | " + g.getNome() +" (" + g.getNumeroAbbinamento() + ") | " + g.getPunteggio() + " | " + g.getVittorie() 
+                + " | " + g.getPareggi() + " | " + g.getBuchholz() + " | " + g.getBerger() + " | " + (int)g.getTPR() + " | " + ((g.getBye())?1:0));
             } else {
                 System.out.println(gx + " | " + g.getNome() + " | " + g.getPunteggio() + " | " + g.getVittorie() 
-                + " | " + g.getBuchholz() + " | " + g.getBerger() + " | " + ((g.getBye())?1:0));
+                + " | " + g.getPareggi() + " | " + g.getBuchholz() + " | " + g.getBerger() + " | " + ((g.getBye())?1:0));
             }
             gx++;
         }
