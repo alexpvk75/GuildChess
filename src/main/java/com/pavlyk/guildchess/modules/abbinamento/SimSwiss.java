@@ -4,7 +4,7 @@ import java.util.*;
 
 public class SimSwiss {
     public static void main(String[] args) {
-        int N_giocatori = 20;
+        int N_giocatori =  17;
         TorneoSwiss torneo1 = new TorneoSwiss(N_giocatori);
         for (int g = 0; g < N_giocatori; g++) {
             torneo1.getGiocatori().add(new GiocatoreSwiss("Giocatore " + (g+1), new Random().nextInt(1000, 1751)));
